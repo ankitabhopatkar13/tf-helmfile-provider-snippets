@@ -1,0 +1,15 @@
+bases:
+  - globals.yaml
+  - environments.yaml
+
+repositories:
+- name: charts
+  url: https://<private_charts_repo>
+
+releases:
+- name: namespaces
+  namespace: kube-system
+  chart: charts/day-zero-resource
+  version: "0.3.0"
+  values:
+    - ./values/00-namespaces.yaml

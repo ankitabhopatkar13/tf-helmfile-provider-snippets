@@ -1,0 +1,38 @@
+bases:
+  - globals.yaml
+  - environments.yaml
+
+repositories:
+- name: charts
+  url: https://<private_charts_repo>
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+- name: ingress-nginx
+  url: https://kubernetes.github.io/ingress-nginx
+- name: vmware-tanzu
+  url: https://vmware-tanzu.github.io/helm-charts
+- name: datadog
+  url: https://helm.datadoghq.com
+- name: autoscaler
+  url: https://kubernetes.github.io/autoscaler
+
+- name: ingress-nginx
+  namespace: infra
+  chart: ingress-nginx/ingress-nginx
+  version: "3.7.1"
+  values:
+  - ./values/05-ingress-nginx.yaml.gotmpl
+- name: external-dns
+  namespace: infra
+  chart: bitnami/external-dns
+  version: "3.2.3"
+  values:
+    - ./values/05-external-dns.yaml.gotmpl
+- name: letsencrypt
+  namespace: infra
+  chart: charts/letsencrypt
+  disableValidation: true
+  version: "0.1.3"
+  values:
+  - ./values/05-letsencrypt.yaml.gotmpl
+
